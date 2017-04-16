@@ -1,7 +1,7 @@
 package com.salon.entity;
 
 import com.salon.choosemethod.ISelectParkingLotMethod;
-import com.salon.choosemethod.impl.VacancyMaxMethod;
+import com.salon.choosemethod.impl.UnoccupiedMaxMethod;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -23,7 +23,7 @@ public class ParkingBoy extends ParkingRole {
 
     public ParkingBoy(String name) {
         super(name);
-        this.pSelectParkingLotMethod = new VacancyMaxMethod();
+        this.pSelectParkingLotMethod = new UnoccupiedMaxMethod();
     }
 
     public ParkingBoy(String name, ISelectParkingLotMethod pSelectParkingLotMethod) {

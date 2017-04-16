@@ -13,8 +13,8 @@ public class CapacityMaxMethod implements ISelectParkingLotMethod {
         double capacityMax = 0;
         ParkingLot parkingLotCapacityMax = null;
         for (ParkingLot parkingLot : parkingLotList) {
-            if (parkingLot.getParkCapacity() > capacityMax) {
-                capacityMax = parkingLot.getParkCapacity();
+            if (parkingLot.getCapacity() > capacityMax) {
+                capacityMax = parkingLot.getCapacity();
                 parkingLotCapacityMax = parkingLot;
             }
         }

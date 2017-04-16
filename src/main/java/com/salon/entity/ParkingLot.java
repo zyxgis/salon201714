@@ -38,6 +38,11 @@ public class ParkingLot {
         this.carList = carList;
     }
 
+    /**
+     * 获取所有停车的位数
+     *
+     * @return
+     */
     public int getCapacity() {
         return this.capacity;
     }
@@ -106,21 +111,11 @@ public class ParkingLot {
     }
 
     /**
-     * 获取所有停车的位数
-     *
-     * @return
-     */
-    public int getParkCapacity() {
-        return this.capacity;
-    }
-
-
-    /**
      * 获取停车的比例
      *
      * @return
      */
-    public double getParkRatio() {
+    public double getOccupiedRatio() {
         return this.getUnoccupiedCount() * 1.0 / this.capacity;
     }
 

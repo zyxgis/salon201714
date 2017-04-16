@@ -1,7 +1,5 @@
 package com.salon.entity;
 
-import com.salon.choosemethod.impl.VacancyMaxMethod;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,7 +72,7 @@ public class ParkingCeo extends ParkingRole {
         return getParkingManagerContainCar(carNumber) != null;
     }
 
-    public List<ParkingManager> getParkingManagerCanParkCarList() {
+    public List<ParkingManager> getParkingManagersCanParkCar() {
         List<ParkingManager> parkingManagerCanParkCarList = new LinkedList<ParkingManager>();
         for (ParkingManager parkingManager : this.parkingManagerList) {
             if (parkingManager.canParkCar()) {
@@ -84,9 +82,9 @@ public class ParkingCeo extends ParkingRole {
         return parkingManagerCanParkCarList;
     }
 
-    public ParkingManager getParkingManagerContainCar(String number) {
+    public ParkingManager getParkingManagerContainCar(String carNumber) {
         for (ParkingManager parkingManager : this.parkingManagerList) {
-            if (parkingManager.containCar(number)) {
+            if (parkingManager.containCar(carNumber)) {
                 return parkingManager;
             }
         }

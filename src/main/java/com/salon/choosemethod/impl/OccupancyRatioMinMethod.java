@@ -10,14 +10,14 @@ import java.util.List;
  */
 public class OccupancyRatioMinMethod  implements ISelectParkingLotMethod {
     public ParkingLot pickParkingLot(List<ParkingLot> parkingLotList) {
-        double parkRatio = Double.MAX_VALUE;
-        ParkingLot parkingLotRatioMin = null;
+        double occupancyRatioMin = Double.MAX_VALUE;
+        ParkingLot parkingLotOccupancyRatioMin = null;
         for (ParkingLot parkingLot : parkingLotList) {
-            if (parkingLot.getParkRatio() < parkRatio) {
-                parkRatio = parkingLot.getParkRatio();
-                parkingLotRatioMin = parkingLot;
+            if (parkingLot.getOccupiedRatio() < occupancyRatioMin) {
+                occupancyRatioMin = parkingLot.getOccupiedRatio();
+                parkingLotOccupancyRatioMin = parkingLot;
             }
         }
-        return parkingLotRatioMin;
+        return parkingLotOccupancyRatioMin;
     }
 }

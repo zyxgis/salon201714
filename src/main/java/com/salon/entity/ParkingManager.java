@@ -74,7 +74,7 @@ public class ParkingManager extends ParkingRole {
     }
 
 
-    public List<ParkingBoy> getParkingBoyCanParkCarList() {
+    public List<ParkingBoy> getParkingBoysCanParkCar() {
         List<ParkingBoy> parkingBoyCanParkCarList = new LinkedList<ParkingBoy>();
         for (ParkingBoy parkingBoy : parkingBoyList) {
             if (parkingBoy.canParkCar()) {

@@ -8,9 +8,9 @@ import com.salon.service.IParkingRoleService;
 import java.util.List;
 
 /**
- * Created by zyx on 2017/4/16.
+ * Created by zyx on 2017/4/17.
  */
-public class ParkingCeoServiceImpl implements IParkingRoleService, IParkingBoyService {
+public class ParkingBoyServiceImpl implements IParkingRoleService, IParkingBoyService {
 
     public int getCapacity() {
         return 0;

@@ -4,12 +4,12 @@ import com.salon.entity.ParkingBoy;
 import com.salon.entity.ParkingCeo;
 import com.salon.entity.ParkingLot;
 import com.salon.entity.ParkingManager;
-import com.salon.service.IReporting;
+import com.salon.service.IReportingService;
 
 /**
  * Created by zyx on 2017/4/17.
  */
-public class XmlFormatReportingImpl implements IReporting {
+public class XmlReportingServiceImpl implements IReportingService {
 
     public String reportOutput(ParkingCeo parkingCeo) {
         return parkingCeoToXML(parkingCeo);
