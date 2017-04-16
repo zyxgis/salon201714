@@ -15,13 +15,14 @@ public class App {
         return a - b;
     }
 
-    public App() {
+    private ParkingCeo parkingCeo = null;
 
+    public App() {
+        init();
     }
 
-    private ParkingCeo parkingCeo = null;
     public void init(){
-        parkingCeo = new ParkingCeo();
+        parkingCeo = new ParkingCeo("");
     }
 
 

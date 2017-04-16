@@ -14,20 +14,26 @@ public class ParkingManager extends ParkingRole {
     }
 
     /**
-     * Ceo批下来有待进行停的车
-     */
-    private List<Car> needToAllocateCarList = new LinkedList<Car>();
-
-    /**
-     * Ceo批下来有待取走的车
-     */
-    private List<Car> needToTakeCarList = new LinkedList<Car>();
-
-
-    /**
      * 停车负责人：5
      */
     private List<ParkingBoy> parkingBoyList = new ArrayList<ParkingBoy>(5);
+
+    public List<ParkingBoy> getParkingBoyList() {
+        return parkingBoyList;
+    }
+
+    public void setParkingBoyList(List<ParkingBoy> parkingBoyList) {
+        this.parkingBoyList = parkingBoyList;
+    }
+
+    @Override
+    public int getCapacity() {
+        int count = 0;
+        for (ParkingBoy parkingBoy : parkingBoyList) {
+            count += parkingBoy.getCapacity();
+        }
+        return count;
+    }
 
     /**
      * 停车位数目
@@ -35,14 +41,22 @@ public class ParkingManager extends ParkingRole {
      * @return
      */
     @Override
-    public int getParkCount() {
+    public int getOccupyCount() {
         int count = 0;
-        for (ParkingBoy boy : parkingBoyList) {
-            count += boy.getParkCount();
+        for (ParkingBoy parkingBoy : parkingBoyList) {
+            count += parkingBoy.getOccupyCount();
         }
         return count;
     }
 
+    @Override
+    public int getUnoccupiedCount() {
+        int count = 0;
+        for (ParkingBoy parkingBoy : parkingBoyList) {
+            count += parkingBoy.getUnoccupiedCount();
+        }
+        return count;
+    }
 
     /**
      * 是否可以停车
@@ -84,22 +98,21 @@ public class ParkingManager extends ParkingRole {
         return null;
     }
 
-    public ParkingBoy allocatePark(Car car) {
+    public ParkingLot allocateParkingLotToCar(Car car) {
         for (ParkingBoy parkingBoy : parkingBoyList) {
             if (parkingBoy.canParkCar()) {
-                parkingBoy.allocatePark(car);
-                return parkingBoy;
+                return parkingBoy.allocateParkingLotToCar(car);
             }
         }
         return null;
     }
 
-    public ParkingBoy takeCar(String number) {
-        ParkingBoy parkingBoy = getParkingBoyContainCar(number);
+    public ParkingLot takeCarFromParkingLot(String carNumber) {
+        ParkingBoy parkingBoy = getParkingBoyContainCar(carNumber);
         if (parkingBoy != null) {
-            parkingBoy.takeCar(number);
+            return parkingBoy.takeCarFromParkingLot(carNumber);
         }
-        return parkingBoy;
+        return null;
     }
 
     public String toXML() {

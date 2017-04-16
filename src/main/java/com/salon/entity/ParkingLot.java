@@ -11,14 +11,9 @@ public class ParkingLot {
     private String name = null;
 
     /**
-     * 已占用的停车位数
-     */
-    private int occupyCount = 0;
-
-    /**
      * 总的停车位数：10-100
      */
-    private int capacity = -1;
+    private int capacity = 0;
 
     private List<Car> carList = null;
 
@@ -26,6 +21,40 @@ public class ParkingLot {
         this.name = name;
         init(capacity);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Car> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<Car> carList) {
+        this.carList = carList;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
+    public int getOccupyCount() {
+        return carList==null?0:carList.size();
+    }
+
+    /**
+     * 获取可用停车的位数
+     *
+     * @return
+     */
+    public int getUnoccupiedCount() {
+        return this.capacity - getOccupyCount();
+    }
+
 
     private boolean validCapacity(int capacity){
         return (capacity>=10 && capacity<=100);
@@ -51,7 +80,7 @@ public class ParkingLot {
      * @return
      */
     public boolean canParkCar() {
-        return this.capacity > this.occupyCount;
+        return getUnoccupiedCount() > 0;
     }
 
     public void parkCar(Car car){
@@ -62,7 +91,6 @@ public class ParkingLot {
         Car car = getCar(carNumber);
         if(car != null){
             carList.remove(car);
-            occupyCount--;
             return true;
         }
         return false;
@@ -86,14 +114,6 @@ public class ParkingLot {
         return this.capacity;
     }
 
-    /**
-     * 获取可用停车的位数
-     *
-     * @return
-     */
-    public int getParkCount() {
-        return this.capacity - this.occupyCount;
-    }
 
     /**
      * 获取停车的比例
@@ -101,14 +121,14 @@ public class ParkingLot {
      * @return
      */
     public double getParkRatio() {
-        return this.occupyCount * 1.0 / this.capacity;
+        return this.getUnoccupiedCount() * 1.0 / this.capacity;
     }
 
     public String toXML() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<ParkingLot>");
         stringBuilder.append("<Name>" + this.name + "</Name>");
-        stringBuilder.append("<Count>" + this.occupyCount + "</Count>");
+        stringBuilder.append("<Count>" + this.getOccupyCount() + "</Count>");
         stringBuilder.append("<Capacity>" + this.capacity + "</Capacity>");
         stringBuilder.append("</ParkingLot>");
         return stringBuilder.toString();

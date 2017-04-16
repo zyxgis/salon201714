@@ -7,12 +7,12 @@ public enum PickTypeEnum {
     /**
      * 最大获取可用停车的位数
      */
-    PARKING_EMPTY_MAX(1),
+    PARKING_UNOCCUPIED_MAX(1),
 
     /**
      * 最大获取可用停车的比例
      */
-    PARKING_RATIO_MIN(2),
+    PARKING_OCCUPY_RATIO_MIN(2),
 
     /**
      * 最大所有停车的位数

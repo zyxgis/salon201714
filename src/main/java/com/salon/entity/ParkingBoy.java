@@ -11,18 +11,10 @@ import java.util.List;
  * 停车负责人
  */
 public class ParkingBoy extends ParkingRole {
+    /**
+     * 选择停车场的方法
+     */
     private ISelectParkingLotMethod pSelectParkingLotMethod;
-
-    /**
-     * Manager批下来有待进行停的车
-     */
-    private List<Car> needToAllocateCarList = new LinkedList<Car>();
-
-    /**
-     * Manager批下来有待取走的车
-     */
-    private List<Car> needToTakeCarList = new LinkedList<Car>();
-
 
     /**
      * 停车场数：3-5
@@ -39,16 +31,50 @@ public class ParkingBoy extends ParkingRole {
         this.pSelectParkingLotMethod = pSelectParkingLotMethod;
     }
 
+    public ISelectParkingLotMethod getpSelectParkingLotMethod() {
+        return pSelectParkingLotMethod;
+    }
+
+    public void setpSelectParkingLotMethod(ISelectParkingLotMethod pSelectParkingLotMethod) {
+        this.pSelectParkingLotMethod = pSelectParkingLotMethod;
+    }
+
+    public List<ParkingLot> getParkingLotList() {
+        return parkingLotList;
+    }
+
+    public void setParkingLotList(List<ParkingLot> parkingLotList) {
+        this.parkingLotList = parkingLotList;
+    }
+
+    @Override
+    public int getCapacity() {
+        int count = 0;
+        for (ParkingLot parkingLot : parkingLotList) {
+            count += parkingLot.getCapacity();
+        }
+        return count;
+    }
+
     /**
      * 已停车位数目
      *
      * @return
      */
     @Override
-    public int getParkCount() {
+    public int getOccupyCount() {
         int count = 0;
         for (ParkingLot parkingLot : parkingLotList) {
-            count += parkingLot.getParkCount();
+            count += parkingLot.getOccupyCount();
+        }
+        return count;
+    }
+
+    @Override
+    public int getUnoccupiedCount() {
+        int count = 0;
+        for (ParkingLot parkingLot : parkingLotList) {
+            count += parkingLot.getUnoccupiedCount();
         }
         return count;
     }
@@ -71,12 +97,12 @@ public class ParkingBoy extends ParkingRole {
     /**
      * 是否已将车停在此处
      *
-     * @param number
+     * @param carNumber
      * @return
      */
     @Override
-    public boolean containCar(String number) {
-        return getParkingLotContainCar(number) != null;
+    public boolean containCar(String carNumber) {
+        return getParkingLotContainCar(carNumber) != null;
     }
 
     /**
@@ -85,7 +111,7 @@ public class ParkingBoy extends ParkingRole {
      * @param car
      * @return
      */
-    public ParkingLot allocatePark(Car car) {
+    public ParkingLot allocateParkingLotToCar(Car car) {
         ParkingLot parkingLot = pickParkingLot();
         parkingLot.parkCar(car);
         return parkingLot;
@@ -94,21 +120,25 @@ public class ParkingBoy extends ParkingRole {
     /**
      * 取车
      *
-     * @param number
+     * @param carNumber
      * @return
      */
-    public ParkingLot takeCar(String number) {
-        ParkingLot parkingLot = getParkingLotContainCar(number);
+    public ParkingLot takeCarFromParkingLot(String carNumber) {
+        ParkingLot parkingLot = getParkingLotContainCar(carNumber);
         if (parkingLot != null) {
-            parkingLot.takeCar(number);
+            parkingLot.takeCar(carNumber);
         }
         return parkingLot;
     }
 
-
-    public ParkingLot getParkingLotContainCar(String number) {
+    /**
+     * 获取停有该车版的停车场
+     *
+     * @return
+     */
+    public ParkingLot getParkingLotContainCar(String carNumber) {
         for (ParkingLot parkingLot : parkingLotList) {
-            if (parkingLot.containCar(number)) {
+            if (parkingLot.containCar(carNumber)) {
                 return parkingLot;
             }
         }
@@ -135,7 +165,7 @@ public class ParkingBoy extends ParkingRole {
      *
      * @return
      */
-    public ParkingLot pickParkingLot() {
+    private ParkingLot pickParkingLot() {
         List<ParkingLot> parkingLotList = getParkingLotsCanParkCar();
         ParkingLot parkingLot = pSelectParkingLotMethod.pickParkingLot(parkingLotList);
         return parkingLot;

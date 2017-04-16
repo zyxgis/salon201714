@@ -19,11 +19,37 @@ public class ParkingCeo extends ParkingRole {
      */
     private List<ParkingManager> parkingManagerList = new LinkedList<ParkingManager>();
 
+    public List<ParkingManager> getParkingManagerList() {
+        return parkingManagerList;
+    }
+
+    public void setParkingManagerList(List<ParkingManager> parkingManagerList) {
+        this.parkingManagerList = parkingManagerList;
+    }
+
     @Override
-    public int getParkCount() {
+    public int getCapacity() {
         int count = 0;
         for (ParkingManager parkingManager : parkingManagerList) {
-            count += parkingManager.getParkCount();
+            count += parkingManager.getCapacity();
+        }
+        return count;
+    }
+
+    @Override
+    public int getOccupyCount() {
+        int count = 0;
+        for (ParkingManager parkingManager : parkingManagerList) {
+            count += parkingManager.getOccupyCount();
+        }
+        return count;
+    }
+
+    @Override
+    public int getUnoccupiedCount() {
+        int count = 0;
+        for (ParkingManager parkingManager : parkingManagerList) {
+            count += parkingManager.getUnoccupiedCount();
         }
         return count;
     }
@@ -44,8 +70,8 @@ public class ParkingCeo extends ParkingRole {
     }
 
     @Override
-    public boolean containCar(String number) {
-        return getParkingManagerContainCar(number) != null;
+    public boolean containCar(String carNumber) {
+        return getParkingManagerContainCar(carNumber) != null;
     }
 
     public List<ParkingManager> getParkingManagerCanParkCarList() {
@@ -67,18 +93,22 @@ public class ParkingCeo extends ParkingRole {
         return null;
     }
 
-    public ParkingManager allocatePark(Car car) {
+    @Override
+    public ParkingLot allocateParkingLotToCar(Car car) {
         for (ParkingManager parkingManager : this.parkingManagerList) {
             if (parkingManager.canParkCar()) {
-                parkingManager.allocatePark(car);
-                return parkingManager;
+                return parkingManager.allocateParkingLotToCar(car);
             }
         }
         return null;
     }
 
-
-    public ParkingLot takeCar(String number) {
+    @Override
+    public ParkingLot takeCarFromParkingLot(String carNumber) {
+        ParkingManager parkingManager = getParkingManagerContainCar(carNumber);
+        if (parkingManager != null) {
+            return parkingManager.takeCarFromParkingLot(carNumber);
+        }
         return null;
     }
 
